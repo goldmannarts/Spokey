@@ -23,12 +23,13 @@ export default function Hero({ onSearch }) {
 
   return (
     <section className="hero" id="home">
+      <img className="hero-background" src="/assets/hero-villa.png" alt="Mediterranean villa overlooking an infinity pool and olive-covered hills" />
+      <div className="hero-gradient" aria-hidden="true" />
       <div className="hero-heading-wrap">
         <p className="eyebrow">Curated homes across Europe</p>
         <h1>Luxury<br />Living</h1>
       </div>
       <div className="hero-media">
-        <img src="/assets/hero-villa.png" alt="Mediterranean villa overlooking an infinity pool and olive-covered hills" />
         <p className="hero-caption"><span>Featured residence</span> Ibiza, Spain</p>
         <form className="property-search" onSubmit={submit}>
           <div className="search-topline">
