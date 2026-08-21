@@ -19,9 +19,12 @@ export default function App() {
     const query = search.query.trim().toLowerCase();
     return listings.filter((listing) => {
       const haystack = `${listing.title} ${listing.location} ${listing.type} ${listing.description}`.toLowerCase();
+      const matchesType = search.type === 'all'
+        || (search.type === 'House' && ['House', 'Villa', 'Townhouse'].includes(listing.type))
+        || (search.type === 'Apartment' && ['Apartment', 'Penthouse'].includes(listing.type));
       return (search.mode === 'all' || listing.mode === search.mode)
         && (search.location === 'all' || listing.location.includes(search.location))
-        && (search.type === 'all' || listing.type === search.type)
+        && matchesType
         && (search.bedrooms === 'all' || listing.beds >= Number(search.bedrooms))
         && (!query || haystack.includes(query));
     });

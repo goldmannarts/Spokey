@@ -1,17 +1,15 @@
-import { ArrowUpRight, Search, SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
 
 const initialSearch = {
-  mode: 'buy',
+  mode: 'all',
   query: '',
   location: 'all',
-  type: 'all',
+  type: 'House',
   bedrooms: 'all',
 };
 
 export default function Hero({ onSearch }) {
   const [search, setSearch] = useState(initialSearch);
-  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const setField = (field, value) => setSearch((current) => ({ ...current, [field]: value }));
 
@@ -23,82 +21,43 @@ export default function Hero({ onSearch }) {
 
   return (
     <section className="hero" id="home">
+      <img className="hero-background" src="/assets/hero-villa.png" alt="Mediterranean villa overlooking an infinity pool and olive-covered hills" />
+      <div className="hero-gradient" aria-hidden="true" />
       <div className="hero-heading-wrap">
         <p className="eyebrow">Curated homes across Europe</p>
         <h1>Luxury<br />Living</h1>
       </div>
       <div className="hero-media">
-        <img src="/assets/hero-villa.png" alt="Mediterranean villa overlooking an infinity pool and olive-covered hills" />
         <p className="hero-caption"><span>Featured residence</span> Ibiza, Spain</p>
         <form className="property-search" onSubmit={submit}>
-          <div className="search-topline">
-            <div className="mode-toggle" aria-label="Listing type">
-              {['buy', 'rent'].map((mode) => (
-                <button
-                  className={search.mode === mode ? 'active' : ''}
-                  key={mode}
-                  type="button"
-                  aria-pressed={search.mode === mode}
-                  onClick={() => setField('mode', mode)}
-                >
-                  {mode[0].toUpperCase() + mode.slice(1)}
-                </button>
-              ))}
-            </div>
-            <button
-              className="filter-toggle"
-              type="button"
-              aria-expanded={filtersOpen}
-              onClick={() => setFiltersOpen((open) => !open)}
-            >
-              <SlidersHorizontal size={16} /> Filters
-            </button>
+          <div className="property-kind-toggle" aria-label="Property type">
+            {['House', 'Apartment'].map((type) => (
+              <button
+                className={search.type === type ? 'active' : ''}
+                key={type}
+                type="button"
+                aria-pressed={search.type === type}
+                onClick={() => setField('type', type)}
+              >
+                {type}
+                {search.type === type && <img src="/assets/check-circle.svg" alt="" aria-hidden="true" />}
+              </button>
+            ))}
           </div>
-          <label className="main-search">
-            <Search aria-hidden="true" />
-            <span className="sr-only">Search by location or property name</span>
-            <input
+          <div className="main-search">
+            <label className="sr-only" htmlFor="property-search-query">Describe the home you are looking for</label>
+            <textarea
+              id="property-search-query"
               value={search.query}
               onChange={(event) => setField('query', event.target.value)}
-              placeholder="What kind of home are you looking for?"
+              maxLength={100}
+              placeholder="What kind of house are you looking for?"
             />
-          </label>
-          <div className={`search-filters ${filtersOpen ? 'search-filters--open' : ''}`}>
-            <label>
-              <span>Location</span>
-              <select value={search.location} onChange={(event) => setField('location', event.target.value)}>
-                <option value="all">Anywhere</option>
-                <option value="Portugal">Portugal</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="Spain">Spain</option>
-                <option value="Ireland">Ireland</option>
-              </select>
-            </label>
-            <label>
-              <span>Property type</span>
-              <select value={search.type} onChange={(event) => setField('type', event.target.value)}>
-                <option value="all">All homes</option>
-                <option value="Villa">Villa</option>
-                <option value="Apartment">Apartment</option>
-                <option value="Penthouse">Penthouse</option>
-                <option value="Townhouse">Townhouse</option>
-                <option value="House">House</option>
-              </select>
-            </label>
-            <label>
-              <span>Bedrooms</span>
-              <select value={search.bedrooms} onChange={(event) => setField('bedrooms', event.target.value)}>
-                <option value="all">Any number</option>
-                <option value="2">2+</option>
-                <option value="3">3+</option>
-                <option value="4">4+</option>
-                <option value="5">5+</option>
-              </select>
-            </label>
+            <span className="search-limit">max. 100 characters</span>
+            <button className="primary-button search-submit" type="submit">
+              Find listing <img src="/assets/sparkle.svg" alt="" aria-hidden="true" />
+            </button>
           </div>
-          <button className="primary-button search-submit" type="submit">
-            Find a Home <ArrowUpRight size={17} />
-          </button>
         </form>
       </div>
     </section>

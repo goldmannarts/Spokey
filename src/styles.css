@@ -54,7 +54,8 @@ body.modal-is-open {
 
 button,
 input,
-select {
+select,
+textarea {
   color: inherit;
   font: inherit;
 }
@@ -189,15 +190,47 @@ select:focus-visible {
 }
 
 .hero {
+  position: relative;
+  overflow: hidden;
   padding-top: var(--header-height);
+  background: var(--paper);
+}
+
+.hero-background {
+  position: absolute;
+  z-index: 0;
+  inset: var(--header-height) 0 0;
+  width: 100%;
+  height: calc(100% - var(--header-height));
+  max-width: none;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.hero-gradient {
+  position: absolute;
+  z-index: 1;
+  inset: var(--header-height) 0 auto;
+  height: min(430px, 50%);
+  background: linear-gradient(
+    to bottom,
+    var(--paper) 0%,
+    rgba(242, 238, 230, 0.96) 25%,
+    rgba(242, 238, 230, 0.5) 54%,
+    rgba(242, 238, 230, 0) 100%
+  );
+  pointer-events: none;
 }
 
 .hero-heading-wrap {
-  height: 260px;
+  position: relative;
+  z-index: 2;
+  min-height: 310px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 52px 20px 68px;
   text-align: center;
 }
 
@@ -206,13 +239,14 @@ select:focus-visible {
   font-family: 'Krona One', sans-serif;
   font-size: clamp(4.6rem, 7.4vw, 7.4rem);
   font-weight: 400;
-  line-height: 0.91;
+  line-height: 1.02;
   letter-spacing: 0;
 }
 
 .hero-media {
   position: relative;
-  height: clamp(480px, 43vw, 630px);
+  z-index: 2;
+  height: clamp(520px, 43vw, 680px);
 }
 
 .hero-media::after {
@@ -221,13 +255,6 @@ select:focus-visible {
   inset: 0;
   background: linear-gradient(to bottom, rgba(36, 25, 22, 0.06), rgba(36, 25, 22, 0) 45%, rgba(36, 25, 22, 0.22));
   pointer-events: none;
-}
-
-.hero-media > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
 }
 
 .hero-caption {
@@ -248,121 +275,82 @@ select:focus-visible {
 .property-search {
   position: absolute;
   z-index: 3;
-  top: -30px;
+  top: -42px;
   left: 50%;
-  width: min(720px, calc(100% - 40px));
-  padding: 14px;
+  width: min(860px, calc(100% - 40px));
+  padding: 18px 10px 10px;
   transform: translateX(-50%);
-  background: rgba(250, 248, 244, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.74);
-  border-radius: 7px;
-  box-shadow: 0 24px 55px rgba(34, 25, 24, 0.18);
-  backdrop-filter: blur(12px);
+  background: rgba(135, 132, 127, 0.3);
+  border: 0.75px solid #dbd6ce;
+  border-radius: 28px;
+  box-shadow: 0 26px 55px rgba(34, 25, 24, 0.15);
+  backdrop-filter: blur(13.1px);
 }
 
-.search-topline {
+.property-kind-toggle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 2px 12px;
+  justify-content: center;
+  gap: 14px;
+  padding-bottom: 14px;
 }
 
-.mode-toggle {
+.property-kind-toggle button {
+  min-width: 140px;
+  min-height: 42px;
   display: inline-flex;
-  gap: 3px;
-  padding: 3px;
-  border-radius: 5px;
-  background: #e7e1d8;
-}
-
-.mode-toggle button,
-.filter-toggle {
-  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
   padding: 0 18px;
-  border-radius: 4px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
   background: transparent;
-  font-size: 0.75rem;
-  font-weight: 650;
+  font-size: 0.88rem;
+  font-weight: 500;
   cursor: pointer;
 }
 
-.mode-toggle button.active {
+.property-kind-toggle button.active {
   color: white;
   background: var(--ink);
 }
 
-.filter-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
+.property-kind-toggle img {
+  width: 18px;
+  height: 18px;
 }
 
 .main-search {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding: 0 20px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
+  position: relative;
+  height: 245px;
+  overflow: hidden;
+  border-radius: 24px;
   background: var(--white);
 }
 
-.main-search svg {
-  flex: 0 0 auto;
-  color: var(--wine);
-}
-
-.main-search input {
+.main-search textarea {
   width: 100%;
+  height: 148px;
+  display: block;
+  padding: 24px 26px;
+  resize: none;
   border: 0;
   outline: 0;
   background: transparent;
-  font-size: 1rem;
+  font-size: 1.35rem;
+  line-height: 1.45;
 }
 
-.main-search input::placeholder {
-  color: #817775;
+.main-search textarea::placeholder {
+  color: #a4a4a4;
 }
 
-.search-filters {
-  display: grid;
-  grid-template-rows: 0fr;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  overflow: hidden;
-  opacity: 0;
-  transition: grid-template-rows 220ms ease, opacity 200ms ease, padding 220ms ease;
-}
-
-.search-filters--open {
-  grid-template-rows: 1fr;
-  padding-top: 12px;
-  opacity: 1;
-}
-
-.search-filters label {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.search-filters span {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--ink-soft);
-  font-size: 0.66rem;
-  font-weight: 650;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.search-filters select {
-  width: 100%;
-  height: 42px;
-  padding: 0 11px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: var(--white);
+.search-limit {
+  position: absolute;
+  left: 26px;
+  bottom: 23px;
+  color: #a4a4a4;
   font-size: 0.8rem;
 }
 
@@ -389,8 +377,20 @@ select:focus-visible {
 
 .search-submit {
   position: absolute;
-  right: 26px;
-  top: 72px;
+  right: 18px;
+  bottom: 18px;
+  min-width: 190px;
+  min-height: 68px;
+  gap: 5px;
+  padding-inline: 18px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.search-submit img {
+  width: 25px;
+  height: 25px;
 }
 
 .value-section {
@@ -400,9 +400,8 @@ select:focus-visible {
 
 .display-heading {
   margin-top: 22px;
-  font-family: 'Krona One', sans-serif;
-  font-size: clamp(2.6rem, 4.7vw, 4.8rem);
-  font-weight: 400;
+  font-size: clamp(2.5rem, 4.2vw, 3.75rem);
+  font-weight: 550;
   line-height: 1.14;
   letter-spacing: 0;
 }
@@ -441,9 +440,8 @@ select:focus-visible {
 
 .value-item h3 {
   margin-bottom: 15px;
-  font-family: 'Krona One', sans-serif;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 650;
   letter-spacing: 0;
 }
 
@@ -472,9 +470,8 @@ select:focus-visible {
 .faq-heading h2,
 .final-cta h2 {
   margin-top: 15px;
-  font-family: 'Krona One', sans-serif;
-  font-size: clamp(2.4rem, 4vw, 4.25rem);
-  font-weight: 400;
+  font-size: clamp(2.5rem, 4.2vw, 3.75rem);
+  font-weight: 550;
   line-height: 1.12;
   letter-spacing: 0;
 }
@@ -533,8 +530,8 @@ select:focus-visible {
   place-items: center;
   color: white;
   background: var(--ink);
-  font-family: 'Krona One', sans-serif;
   font-size: 0.82rem;
+  font-weight: 700;
 }
 
 .process-content {
@@ -560,9 +557,8 @@ select:focus-visible {
 .process-content h3 {
   max-width: 500px;
   margin: 17px 0 24px;
-  font-family: 'Krona One', sans-serif;
-  font-size: clamp(1.8rem, 3vw, 3.15rem);
-  font-weight: 400;
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  font-weight: 550;
   line-height: 1.16;
   letter-spacing: 0;
 }
@@ -671,8 +667,8 @@ select:focus-visible {
 }
 
 .property-title {
-  font-family: 'Krona One', sans-serif;
   font-size: 1.03rem;
+  font-weight: 650;
   line-height: 1.4;
   letter-spacing: 0;
 }
@@ -728,9 +724,8 @@ select:focus-visible {
 }
 
 .empty-results h3 {
-  font-family: 'Krona One', sans-serif;
   font-size: 1.4rem;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .empty-results p {
@@ -796,9 +791,8 @@ select:focus-visible {
 
 .modal-content h2 {
   margin: 15px 0 20px;
-  font-family: 'Krona One', sans-serif;
   font-size: clamp(1.7rem, 2.5vw, 2.6rem);
-  font-weight: 400;
+  font-weight: 550;
   line-height: 1.2;
   letter-spacing: 0;
 }
@@ -957,7 +951,7 @@ select:focus-visible {
 
 .final-cta h2 {
   max-width: 850px;
-  font-size: clamp(3rem, 6vw, 6.6rem);
+  font-size: clamp(2.5rem, 4.2vw, 3.75rem);
 }
 
 .final-cta > p:not(.eyebrow) {
@@ -1030,7 +1024,8 @@ select:focus-visible {
   }
 
   .hero-heading-wrap {
-    height: 230px;
+    min-height: 280px;
+    padding-block: 42px 58px;
   }
 
   .value-section {
@@ -1102,15 +1097,15 @@ select:focus-visible {
   .site-nav a {
     padding: 19px 4px;
     border-bottom: 1px solid var(--line);
-    font-family: 'Krona One', sans-serif;
     font-size: 1.35rem;
+    font-weight: 600;
     letter-spacing: 0;
   }
 
   .hero-heading-wrap {
-    height: 175px;
-    justify-content: flex-start;
-    padding-top: 34px;
+    min-height: 200px;
+    justify-content: center;
+    padding: 42px 18px 54px;
   }
 
   .hero-heading-wrap .eyebrow {
@@ -1123,11 +1118,22 @@ select:focus-visible {
   }
 
   .hero-media {
-    height: 480px;
+    height: 560px;
   }
 
-  .hero-media > img {
-    object-position: 58% center;
+  .hero-background {
+    object-position: 58% bottom;
+  }
+
+  .hero-gradient {
+    height: 340px;
+    background: linear-gradient(
+      to bottom,
+      var(--paper) 0%,
+      rgba(242, 238, 230, 0.97) 26%,
+      rgba(242, 238, 230, 0.5) 58%,
+      rgba(242, 238, 230, 0) 100%
+    );
   }
 
   .hero-caption {
@@ -1138,45 +1144,50 @@ select:focus-visible {
   .property-search {
     top: 18px;
     width: calc(100% - 28px);
-    padding: 11px;
+    padding: 10px;
+    border-radius: 20px;
   }
 
-  .search-topline {
-    padding-bottom: 9px;
+  .property-kind-toggle {
+    gap: 8px;
+    padding-bottom: 10px;
   }
 
-  .mode-toggle button,
-  .filter-toggle {
+  .property-kind-toggle button {
+    min-width: 0;
     min-height: 38px;
-    padding-inline: 14px;
+    flex: 1;
+    padding-inline: 10px;
+    font-size: 0.8rem;
   }
 
   .main-search {
-    height: 62px;
-    padding: 0 14px;
+    height: 230px;
+    border-radius: 17px;
   }
 
-  .main-search input {
-    padding-right: 0;
-    font-size: 0.85rem;
+  .main-search textarea {
+    height: 124px;
+    padding: 20px 18px;
+    font-size: 1rem;
   }
 
-  .search-filters {
-    display: none;
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
-  .search-filters--open {
-    display: grid;
-    grid-template-rows: 1fr;
-    padding-top: 10px;
+  .search-limit {
+    left: 18px;
+    bottom: 79px;
+    font-size: 0.68rem;
   }
 
   .search-submit {
-    position: static;
-    width: 100%;
-    margin-top: 10px;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    min-width: 0;
+    min-height: 56px;
+    width: auto;
+    margin: 0;
+    font-size: 0.9rem;
+    gap: 4px;
   }
 
   .value-section {
@@ -1338,16 +1349,18 @@ select:focus-visible {
 }
 
 @media (max-width: 380px) {
-  .filter-toggle {
+  .property-kind-toggle button {
     padding-inline: 9px;
+    font-size: 0.82rem;
   }
 
-  .mode-toggle button {
-    padding-inline: 12px;
+  .property-kind-toggle img {
+    width: 17px;
+    height: 17px;
   }
 
-  .main-search input::placeholder {
-    font-size: 0.76rem;
+  .main-search textarea::placeholder {
+    font-size: 0.9rem;
   }
 
   .property-meta {
