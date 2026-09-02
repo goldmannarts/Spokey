@@ -151,7 +151,7 @@ select:focus-visible {
   align-items: center;
   gap: clamp(25px, 3vw, 52px);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .site-nav a {
@@ -171,6 +171,14 @@ select:focus-visible {
 }
 
 .site-nav a:hover::after {
+  right: 0;
+}
+
+.site-nav a[aria-current='page'] {
+  font-weight: 600;
+}
+
+.site-nav a[aria-current='page']::after {
   right: 0;
 }
 
@@ -202,6 +210,7 @@ select:focus-visible {
   inset: var(--header-height) 0 0;
   width: 100%;
   height: calc(100% - var(--header-height));
+  display: block;
   max-width: none;
   object-fit: cover;
   object-position: center bottom;
@@ -1001,10 +1010,16 @@ select:focus-visible {
 .footer-column a {
   color: var(--ink-soft);
   font-size: 0.72rem;
+  font-weight: 400;
 }
 
 .footer-column a:hover {
   color: var(--wine);
+}
+
+.footer-column a[aria-current='page'] {
+  color: var(--ink);
+  font-weight: 650;
 }
 
 .footer-bottom {
@@ -1098,8 +1113,18 @@ select:focus-visible {
     padding: 19px 4px;
     border-bottom: 1px solid var(--line);
     font-size: 1.35rem;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 0;
+  }
+
+  .site-nav a[aria-current='page'] {
+    font-weight: 650;
+  }
+
+  .site-nav a[aria-current='page']::after {
+    right: auto;
+    bottom: 10px;
+    width: 44px;
   }
 
   .hero-heading-wrap {
