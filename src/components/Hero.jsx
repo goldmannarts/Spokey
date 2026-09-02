@@ -21,7 +21,18 @@ export default function Hero({ onSearch }) {
 
   return (
     <section className="hero" id="home">
-      <img className="hero-background" src="/assets/hero-villa.png" alt="Mediterranean villa overlooking an infinity pool and olive-covered hills" />
+      <video
+        className="hero-background"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/assets/hero-villa.png"
+        aria-hidden="true"
+      >
+        <source src="/assets/premium-hero.mp4" type="video/mp4" />
+      </video>
       <div className="hero-gradient" aria-hidden="true" />
       <div className="hero-heading-wrap">
         <p className="eyebrow">Curated homes across Europe</p>

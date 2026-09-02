@@ -202,6 +202,7 @@ select:focus-visible {
   inset: var(--header-height) 0 0;
   width: 100%;
   height: calc(100% - var(--header-height));
+  display: block;
   max-width: none;
   object-fit: cover;
   object-position: center bottom;
