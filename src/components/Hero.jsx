@@ -25,7 +25,6 @@ export default function Hero({ onSearch }) {
         className="hero-background"
         autoPlay
         muted
-        loop
         playsInline
         preload="metadata"
         poster="/assets/hero-villa.png"
