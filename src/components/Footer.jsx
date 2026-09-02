@@ -28,7 +28,9 @@ export default function Footer() {
         {columns.map((column) => (
           <div className="footer-column" key={column.title}>
             <h3>{column.title}</h3>
-            {column.links.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
+            {column.links.map(([label, href]) => (
+              <a key={label} href={href} aria-current={label === 'Home' ? 'page' : undefined}>{label}</a>
+            ))}
           </div>
         ))}
       </div>

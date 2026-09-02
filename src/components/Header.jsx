@@ -31,7 +31,14 @@ export default function Header() {
       </a>
       <nav className={`site-nav ${menuOpen ? 'site-nav--open' : ''}`} aria-label="Primary navigation">
         {navItems.map(([label, href]) => (
-          <a key={label} href={href} onClick={() => setMenuOpen(false)}>{label}</a>
+          <a
+            key={label}
+            href={href}
+            aria-current={label === 'Home' ? 'page' : undefined}
+            onClick={() => setMenuOpen(false)}
+          >
+            {label}
+          </a>
         ))}
       </nav>
       <button
